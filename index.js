@@ -26,7 +26,11 @@ function init(){
     })
     .then(answers => {
         switch(answers.selection) {
-
+            case "View All Departments":
+                db.query(`SELECT * FROM department`, function (err, results){
+                    console.table(results)
+                })
+                break;
         }
     })
 }
