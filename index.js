@@ -1,4 +1,6 @@
 const mysql = require('mysql12');
+const inquirer = require('inquirer');
+const table = require('console.table');
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -33,7 +35,13 @@ function init(){
                 })
                 break;
             case "View All Employees":
-                db.query(`SELECT # FROM employee`, function (err, results){
+                db.query(`SELECT * FROM employee`, function (err, results){
+                    console.table(results);
+                    init();
+                })
+                break;
+            case "View All Roles":
+                db.query(`SELECT * FROM role`, function (err, results){
                     console.table(results);
                     init();
                 })
