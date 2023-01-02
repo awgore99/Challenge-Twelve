@@ -80,6 +80,29 @@ function init() {
                         init();
                     })
                     break;
+                case "Add A Role":
+                    inquirer.prompt([
+                        {
+                            type: 'input',
+                            message: 'What is the title of the role?',
+                            name: 'title'
+                        },
+                        {
+                            type: 'input',
+                            message: "What does the role pay?",
+                            name: 'salary'
+                        },
+                        {
+                            type: 'input',
+                            message: "What is the role's department id?",
+                            name: 'department_id'
+                        },
+                    ])
+                    .then(function(response){
+                        db.query(`INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`, [response.title, response.salary, response.department_id]);
+                        init();
+                    })
+                    break;
             }
         })
 }
