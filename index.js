@@ -28,7 +28,14 @@ function init(){
         switch(answers.selection) {
             case "View All Departments":
                 db.query(`SELECT * FROM department`, function (err, results){
-                    console.table(results)
+                    console.table(results);
+                    init();
+                })
+                break;
+            case "View All Employees":
+                db.query(`SELECT # FROM employee`, function (err, results){
+                    console.table(results);
+                    init();
                 })
                 break;
         }
