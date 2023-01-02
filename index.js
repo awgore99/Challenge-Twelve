@@ -46,6 +46,17 @@ function init(){
                     init();
                 })
                 break;
+            case "Add A Department":
+                inquirer.prompt({
+                    type: 'input',
+                    message: "What is the name of the department you wish to add?",
+                    name: "department",
+                })
+                .then(function(response){
+                    db.query(`INSERT INTO department (name) VALUES (?)`);
+                    init();
+                })
+                break;
         }
     })
 }
