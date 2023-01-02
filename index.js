@@ -53,7 +53,7 @@ function init(){
                     name: "department",
                 })
                 .then(function(response){
-                    db.query(`INSERT INTO department (name) VALUES (?)`);
+                    db.query(`INSERT INTO department (name) VALUES (?)`, [response.department]);
                     init();
                 })
                 break;
