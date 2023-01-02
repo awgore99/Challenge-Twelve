@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 },
 );
 
-function init(){
+function init() {
     inquirer.prompt({
         type: "list",
         message: "Select one of the options below: ",
@@ -26,39 +26,62 @@ function init(){
         ],
         name: "selection"
     })
-    .then(answers => {
-        switch(answers.selection) {
-            case "View All Departments":
-                db.query(`SELECT * FROM department`, function (err, results){
-                    console.table(results);
-                    init();
-                })
-                break;
-            case "View All Employees":
-                db.query(`SELECT * FROM employee`, function (err, results){
-                    console.table(results);
-                    init();
-                })
-                break;
-            case "View All Roles":
-                db.query(`SELECT * FROM role`, function (err, results){
-                    console.table(results);
-                    init();
-                })
-                break;
-            case "Add A Department":
-                inquirer.prompt({
-                    type: 'input',
-                    message: "What is the name of the department you wish to add?",
-                    name: "department",
-                })
-                .then(function(response){
-                    db.query(`INSERT INTO department (name) VALUES (?)`, [response.department]);
-                    init();
-                })
-                break;
-        }
-    })
+        .then(answers => {
+            switch (answers.selection) {
+                case "View All Departments":
+                    db.query(`SELECT * FROM department`, function (err, results) {
+                        console.table(results);
+                        init();
+                    })
+                    break;
+                case "View All Employees":
+                    db.query(`SELECT * FROM employee`, function (err, results) {
+                        console.table(results);
+                        init();
+                    })
+                    break;
+                case "View All Roles":
+                    db.query(`SELECT * FROM role`, function (err, results) {
+                        console.table(results);
+                        init();
+                    })
+                    break;
+                case "Add A Department":
+                    inquirer.prompt({
+                        type: 'input',
+                        message: "What is the name of the department you wish to add?",
+                        name: "department",
+                    })
+                        .then(function (response) {
+                            db.query(`INSERT INTO department (name) VALUES (?)`, [response.department]);
+                            init();
+                        })
+                    break;
+                case "Add An Employee":
+                    inquirer.prompt([
+                        {
+                            type: 'input',
+                            message: "What is the employee's first name?",
+                            name: "first"
+                        },
+                        {
+                            type: 'input',
+                            message: "What is the employee's last name?",
+                            name: 'last',
+                        },
+                        {
+                            type: 'input',
+                            message: "What is the employee's role id?",
+                            name: 'role_id',
+                        }
+                    ])
+                    .then(function(response){
+                        db.query(`INSERT INTO employee (first_name, last_name, role_id) VALUES (?,?,?,?)`, [response.first, response.last, response.role_id]);
+                        init();
+                    })
+                    break;
+            }
+        })
 }
 
 init()
